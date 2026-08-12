@@ -1,0 +1,9 @@
+.git
+.github
+frontend
+docs
+**/__pycache__
+**/.pytest_cache
+**/.mypy_cache
+**/.env
+**/node_modules
