@@ -2,6 +2,62 @@
 
 A full-stack document-intelligence application that lets users upload business documents and ask grounded questions with traceable source citations.
 
+## Product Walkthrough
+
+```mermaid
+flowchart LR
+    A["1. Upload document"] --> B["2. Parse and chunk"]
+    B --> C["3. Embed and index"]
+    C --> D["4. Retrieve evidence"]
+    D --> E["5. Generate grounded answer"]
+    E --> F["6. Return citations"]
+```
+
+### Example user experience
+
+**Uploaded document**
+
+```text
+employee-handbook.pdf → 42 searchable chunks
+```
+
+**Question**
+
+> How many paid vacation days do new employees receive?
+
+**Representative grounded response**
+
+> New employees receive 15 paid vacation days per calendar year.  
+>
+> **Source:** employee-handbook.pdf · page 12  
+> **Evidence:** “Full-time employees receive fifteen paid vacation days…”
+
+The answer, provider, source filename, page number, supporting passage, and retrieval score are returned together. This example illustrates the implemented response contract; it is not an evaluation result.
+
+### API example
+
+```bash
+curl -X POST http://localhost:8000/api/query \
+  -H "Content-Type: application/json" \
+  -d '{"question":"How many paid vacation days do new employees receive?","top_k":5}'
+```
+
+```json
+{
+  "answer": "New employees receive 15 paid vacation days per calendar year.",
+  "provider": "extractive",
+  "sources": [
+    {
+      "document_id": "example-document-id",
+      "filename": "employee-handbook.pdf",
+      "page": 12,
+      "chunk": "Full-time employees receive fifteen paid vacation days...",
+      "score": 0.84
+    }
+  ]
+}
+```
+
 ## The Problem
 
 Important information is often scattered across PDFs, Word files, Markdown, and text documents. Manual search is slow, while general-purpose chatbots can produce answers that are difficult to verify.
