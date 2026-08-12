@@ -8,12 +8,23 @@ from .schemas import DocumentRecord, QueryRequest, QueryResponse
 
 app = FastAPI(title="DocIntel AI API", version="1.0.0")
 settings = get_settings()
-app.add_middleware(CORSMiddleware, allow_origins=settings.allowed_origins, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.allowed_origins,
+    allow_origin_regex=settings.cors_origin_regex or None,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @lru_cache
 def get_store() -> DocumentStore:
     return DocumentStore(get_settings())
+
+
+@app.get("/")
+def root() -> dict:
+    return {"service": "DocIntel AI API", "status": "ok", "docs": "/docs"}
 
 
 @app.get("/health")
