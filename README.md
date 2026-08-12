@@ -115,6 +115,7 @@ flowchart TD
 The application automates the complete **upload → parse → chunk → embed → retrieve → answer → cite** workflow behind one API and interface. The evaluation command is reproducible with `python evaluation/evaluate.py` and is executed by GitHub Actions.
 
 These measurements validate the engineering and regression pipeline. They do not represent production traffic, user-volume, latency, cost savings, or independently audited model quality.
+
 ## Screenshots / Demo
 
 The application is currently available as a reproducible local demo:
