@@ -1,5 +1,9 @@
 # DocIntel AI
 
+![Representative product preview](docs/product-preview.svg)
+
+> Representative preview generated from the implemented frontend layout and verified API response fields.
+
 A full-stack document-intelligence application that lets users upload business documents and ask grounded questions with traceable source citations.
 
 ## Product Walkthrough
