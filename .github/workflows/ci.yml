@@ -32,6 +32,8 @@ jobs:
       - name: Run tests with coverage
         run: pytest --cov=app --cov-report=term-missing --cov-fail-under=25
         working-directory: backend
+      - name: Run offline evaluation gates
+        run: python evaluation/evaluate.py
 
   frontend-quality:
     runs-on: ubuntu-latest
