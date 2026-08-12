@@ -154,6 +154,10 @@ The default extractive mode requires no LLM key. To enable generated answers, se
 | `GOOGLE_API_KEY` | empty | Gemini credentials |
 | `MISTRAL_API_KEY` | empty | Mistral credentials |
 
+## Engineering Quality
+
+This repository includes modular Python services, typed API contracts, environment-based configuration, automated tests with coverage, Ruff linting, TypeScript checks, reproducible Docker builds, and GitHub Actions CI. See [Engineering Quality](docs/ENGINEERING.md) for the quality gates and production-readiness boundary.
+
 ## Production Roadmap
 
 - Add screenshots and a hosted demonstration
