@@ -1,19 +1,39 @@
 name: CI
+
 on:
   push:
   pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  backend:
+  backend-quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - run: pip install -r backend/requirements.txt
-      - run: pytest
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+      - name: Install dependencies
+        run: pip install -r backend/requirements.txt -r backend/requirements-dev.txt
+      - name: Lint Python
+        run: ruff check backend/app backend/tests
+      - name: Verify Python imports
+        run: python -m compileall -q backend/app
+      - name: Run tests with coverage
+        run: pytest --cov=app --cov-report=term-missing --cov-fail-under=25
         working-directory: backend
-  frontend:
+
+  frontend-quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,7 +42,21 @@ jobs:
           node-version: "20"
           cache: npm
           cache-dependency-path: frontend/package-lock.json
-      - run: npm install
+      - name: Install locked dependencies
+        run: npm ci
         working-directory: frontend
-      - run: npm run build
+      - name: Type-check
+        run: npm run typecheck
         working-directory: frontend
+      - name: Build production frontend
+        run: npm run build
+        working-directory: frontend
+
+  containers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Compose configuration
+        run: docker compose config --quiet
+      - name: Build application images
+        run: docker compose build
