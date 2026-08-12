@@ -183,6 +183,18 @@ The default extractive mode requires no LLM key. To enable generated answers, se
 | `GOOGLE_API_KEY` | empty | Gemini credentials |
 | `MISTRAL_API_KEY` | empty | Mistral credentials |
 
+## Deployment Details
+
+The repository is prepared for a split cloud deployment, but no public DocIntel URL is currently claimed.
+
+- **Backend:** root `Dockerfile` targets Render and starts FastAPI on the platform-provided `PORT`.
+- **Vector storage:** production demo mode uses embedded Qdrant; local Docker Compose continues to support the Qdrant service.
+- **Frontend:** deploy `frontend/` to Vercel and set `NEXT_PUBLIC_API_URL` to the Render service URL.
+- **CORS:** the production container accepts Vercel deployment origins through `CORS_ORIGIN_REGEX`.
+- **Persistence boundary:** embedded storage on an ephemeral instance is suitable for a portfolio demo, not durable production document storage.
+
+After both services are live and verified, this section should be updated with the public dashboard, API documentation, and health-check URLs.
+
 ## Engineering Quality
 
 This repository includes modular Python services, typed API contracts, environment-based configuration, automated tests with coverage, Ruff linting, TypeScript checks, reproducible Docker builds, and GitHub Actions CI. See [Engineering Quality](docs/ENGINEERING.md) for the quality gates and production-readiness boundary.
