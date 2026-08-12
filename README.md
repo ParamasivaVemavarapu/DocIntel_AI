@@ -6,6 +6,24 @@
 
 A full-stack document-intelligence application that lets users upload business documents and ask grounded questions with traceable source citations.
 
+## Project Case Study
+
+### Problem
+
+Business knowledge is often fragmented across PDFs, Word documents, Markdown, and text files. Manual lookup is slow, and generic assistants can return answers without evidence that users can verify.
+
+### What I Built
+
+I built a full-stack document-intelligence application that ingests four document formats, chunks and embeds their contents, indexes source metadata in Qdrant, retrieves relevant passages, and returns grounded answers with document and page citations. It supports three optional LLM providers and an API-key-free extractive fallback.
+
+### Tech Used
+
+Python and FastAPI for ingestion and retrieval APIs; Sentence Transformers and Qdrant for semantic search; Next.js and TypeScript for the user interface; Docker Compose for reproducible local infrastructure; pytest, Ruff, and GitHub Actions for automated quality gates.
+
+### Outcome
+
+The application automates the complete **upload → parse → chunk → embed → retrieve → answer → cite** workflow. On the versioned four-question synthetic regression set, it records **0.417 macro Precision@K**, **1.000 macro Recall@K**, and **0.833 citation correctness**. These are reproducible offline measurements, not production-performance claims.
+
 ## Product Walkthrough
 
 ```mermaid
