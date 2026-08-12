@@ -11,7 +11,11 @@ from .schemas import Source
 class DocumentStore:
     def __init__(self, settings: Settings):
         self.settings = settings
-        self.client = QdrantClient(url=settings.qdrant_url)
+        self.client = (
+            QdrantClient(path=settings.qdrant_path)
+            if settings.qdrant_path
+            else QdrantClient(url=settings.qdrant_url)
+        )
         self.encoder = SentenceTransformer(settings.embedding_model)
         self.vector_size = self.encoder.get_sentence_embedding_dimension()
         self._ensure_collection()
