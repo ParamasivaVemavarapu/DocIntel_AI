@@ -166,6 +166,16 @@ This repository includes modular Python services, typed API contracts, environme
 - Add authentication, tenant isolation, rate limiting, and file scanning
 - Add conversational memory and multi-hop retrieval
 
+## Reproducible Evaluation
+
+The versioned [evaluation suite](evaluation/README.md) reports macro retrieval Precision@K, Recall@K, and citation correctness from a human-labeled synthetic regression set.
+
+```bash
+python evaluation/evaluate.py
+```
+
+The dataset and recorded outputs are intentionally small and synthetic. They validate the metric pipeline and provide regression gates; they are not presented as production-performance evidence.
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
