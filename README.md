@@ -101,10 +101,20 @@ flowchart TD
 - Run frontend, backend, and Qdrant with Docker Compose
 - Validate backend behavior with tests and GitHub Actions CI
 
-## Results
+## Results and Measurable Evidence
 
-The implemented system demonstrates an end-to-end RAG workflow: multi-format ingestion, semantic indexing, evidence retrieval, grounded answer generation, and citation return through one user interface. No formal retrieval-quality or latency benchmark is claimed yet; a golden question set and RAG evaluation are documented as the next measurement step.
+| Measure | Result | Scope |
+|---|---:|---|
+| Evaluation questions | 4 | Versioned synthetic golden set |
+| Macro retrieval Precision@K | 0.417 | Offline regression fixture |
+| Macro retrieval Recall@K | 1.000 | Offline regression fixture |
+| Citation correctness | 0.833 | Supported citations / returned citations |
+| Supported document formats | 4 | PDF, DOCX, Markdown, TXT |
+| Automated evaluation gates | 3 | Precision, recall, citation correctness |
 
+The application automates the complete **upload → parse → chunk → embed → retrieve → answer → cite** workflow behind one API and interface. The evaluation command is reproducible with `python evaluation/evaluate.py` and is executed by GitHub Actions.
+
+These measurements validate the engineering and regression pipeline. They do not represent production traffic, user-volume, latency, cost savings, or independently audited model quality.
 ## Screenshots / Demo
 
 The application is currently available as a reproducible local demo:
